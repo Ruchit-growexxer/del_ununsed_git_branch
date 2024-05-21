@@ -1,0 +1,25 @@
+name: Delete Feature Branch After Merge
+
+on:
+  pull_request:
+    types: [closed]
+    branches:
+      - main
+      - master
+      - develop
+
+jobs:
+  delete_feature_branch:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Delete merged branch
+        if: github.event.pull_request.merged == true && startsWith(github.event.pull_request.head.ref, 'feature/')
+        run: |
+          echo "Deleting branch: ${{ github.event.pull_request.head.ref }}"
+          git push origin --delete ${{ github.event.pull_request.head.ref }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN}}
