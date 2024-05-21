@@ -29,5 +29,3 @@ jobs:
           git push origin --delete ${{ github.event.pull_request.head.ref }}
         env:
           PAT_TOKEN: ${{ secrets.PAT_TOKEN }}
-        env:
-          GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }}
